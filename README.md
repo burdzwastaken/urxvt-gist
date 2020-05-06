@@ -14,7 +14,6 @@ See the following sections for information on how to enable the scripts or set
 script-specific options and keyboard mappings in your .Xdefaults/.Xresources.
 
 ## Configuration
-
 After installing, put the following lines in your .Xdefaults/.Xresources:
 ```
     URxvt.perl-ext-common: ...,urxvt-gist
