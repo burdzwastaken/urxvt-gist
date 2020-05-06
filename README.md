@@ -3,7 +3,7 @@ Automatic GitHub Gist uploads for selections in URxvt
 
 ## Installation
 Simply place this scripts in /usr/lib/urxvt/perl/ for system-wide availability
-or in ~/.urxvt/ext/ for user-only availability.  You can also put them in a
+or in ~/.urxvt/ext/ for user-only availability. You can also put them in a
 folder of your choice, but then you have to add this line to your
 .Xdefaults/.Xresources:
 ```
