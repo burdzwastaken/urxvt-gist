@@ -3,7 +3,7 @@
 # TODO(burdz): consume token from ~/.netrc <06-05-20> #
 #:META:RESOURCE:%.token:string:GitHub oauth token
 #:META:RESOURCE:%.api:string:GitHub Gist API to target
-#:META:RESOURCE:%.allow-public:string:should the created Gist be public?
+#:META:RESOURCE:%.public:string:should the created Gist be public?
 
 =head1 NAME
 urxvt-gist - Automatic GitHub Gist uploads for selections in URxvt
@@ -74,7 +74,7 @@ sub on_start {
    $self->{token} = $self->x_resource ("%.token");
    $self->{gist_api} = $self->x_resource ("%.api") || "https://api.github.com/gists";
    # create private Gists by default
-   $self->{is_public} = $self->x_resource ("%.allow-public") || 0;
+   $self->{is_public} = $self->x_resource ("%.public") || 0;
 
    push @{ $self->{term}{selection_popup_hook} }, sub {
       ("urxvt-gist upload" => sub { $self->upload_gist })

@@ -24,5 +24,5 @@ Options:
 ```
     URxvt.urxvt-gist.token: GitHub oauth token. (required)
     URxvt.urxvt-gist.api: GitHub Gist API to target. default: `https://api.github.com/gists` (optional)
-    URxvt.urxvt-gist.allow-public: should the created Gist be public? default: `0` (optional)
+    URxvt.urxvt-gist.public: should the created Gist be public? default: `0` (optional)
 ```
