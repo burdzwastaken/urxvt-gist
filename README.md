@@ -17,12 +17,12 @@ script-specific options and keyboard mappings in your .Xdefaults/.Xresources.
 After installing, put the following lines in your .Xdefaults/.Xresources:
 ```
     URxvt.perl-ext-common: ...,urxvt-gist
-    URxvt.keysym.M-Escape: perl:urxvt-gist
+    URxvt.keysym.C-M-e: perl:urxvt-gist
 ```
 
 Options:
 ```
     URxvt.urxvt-gist.token: GitHub oauth token. (required)
     URxvt.urxvt-gist.api: GitHub Gist API to target. default: `https://api.github.com/gists` (optional)
-    URxvt.urxvt-gist.allow-public: should the created Gist be public? default: `false` (optional)
+    URxvt.urxvt-gist.allow-public: should the created Gist be public? default: `0` (optional)
 ```
