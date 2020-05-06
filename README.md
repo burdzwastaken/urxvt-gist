@@ -2,19 +2,19 @@
 Automatic GitHub Gist uploads for selections in URxvt
 
 ## Installation
-Simply place this scripts in /usr/lib/urxvt/perl/ for system-wide availability
-or in ~/.urxvt/ext/ for user-only availability. You can also put them in a
+Simply place this scripts in `/usr/lib/urxvt/perl/` for system-wide availability
+or in `~/.urxvt/ext/` for user-only availability. You can also put them in a
 folder of your choice, but then you have to add this line to your
-.Xdefaults/.Xresources:
+`.Xdefaults`/`.Xresources`:
 ```
     URxvt.perl-lib: /your/folder/
 ```
 
 See the following sections for information on how to enable the scripts or set
-script-specific options and keyboard mappings in your .Xdefaults/.Xresources.
+script-specific options and keyboard mappings in your `.Xdefaults`/`.Xresources`.
 
 ## Configuration
-After installing, put the following lines in your .Xdefaults/.Xresources:
+After installing, put the following lines in your `.Xdefaults`/`.Xresources`:
 ```
     URxvt.perl-ext-common: ...,urxvt-gist
     URxvt.keysym.C-M-e: perl:urxvt-gist
