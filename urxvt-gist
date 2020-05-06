@@ -1,0 +1,103 @@
+#!/usr/bin/env perl
+
+# TODO(burdz): consume token from ~/.netrc <06-05-20> #
+#:META:RESOURCE:%.token:string:GitHub oauth token
+#:META:RESOURCE:%.api:string:GitHub Gist API to target
+#:META:RESOURCE:%.public:string:should the created Gist be public?
+
+=head1 NAME
+urxvt-gist - Automatic GitHub Gist uploads for selections in URxvt
+
+=head1 EXAMPLES
+  URxvt.keysym.C-M-e: perl:urxvt-gist
+
+=head1 DESCRIPTION
+This is an URxvt extension that uploads the selection as a GitHub Gist. It
+currently requires the use of an oauth token stored in your
+.Xdefaults/.Xresources.
+
+The current name of the file upload is the hex encoded md5 sum of the
+selection, so the same content should lead to the same Gist. Currently this
+extension does not support PATCHing an existing Gist as selection checksum with
+be different however it is something that maybe explored in the future.
+
+I<Note to xrdb users:> xrdb uses the C preprocessor, which might interpret
+the double C</> characters as comment start. Use C<\057\057> instead,
+which works regardless of whether xrdb is used to parse the resource file
+or not.
+
+GitHub Gist API spec: https://developer.github.com/v3/gists/#create-a-gist
+
+=cut
+
+use strict;
+
+sub upload_gist {
+   my ($self) = @_;
+
+   require Digest::MD5;
+   require HTTP::Request;
+   require LWP::UserAgent;
+   use JSON::MaybeXS qw(encode_json);
+
+   my $txt = $self->selection;
+   my $filename = $txt;
+   utf8::encode $filename;
+   my $filename = Digest::MD5::md5_hex ($filename) . ".txt";
+
+   my $header = ['Content-Type' => 'application/json; charset=UTF-8', Authorization => "token $self->{token}"];
+   my $msg = "Uploaded from urxvt-gist: $filename";
+
+   my $data = {description => "$msg",
+               public => $self->{is_public} ? 'true' : 'false',
+               files => {$filename => {content => $txt}}};
+
+   my $encoded_data = encode_json($data);
+
+   my $request = HTTP::Request->new('POST', $self->{gist_api}, $header, $encoded_data);
+
+   my $ua = LWP::UserAgent->new;
+   my $response = $ua->request($request);
+
+   if ($response->is_success) {
+       print STDERR $response->decoded_content->url;
+   } else {
+       $msg = "ERROR uploading gist: $response->status_line\n";
+	   print STDERR $msg;
+   }
+}
+
+sub on_start {
+   my ($self) = @_;
+
+   # TODO(burdz): error when not set here (or using other auth mechanisms) <06-05-20> #
+   $self->{token} = $self->x_resource ("%.token");
+   $self->{gist_api} = $self->x_resource ("%.api") || "https://api.github.com/gists";
+   # create private Gists by default
+   $self->{is_public} = $self->x_resource ("%.public") || 0;
+
+   push @{ $self->{term}{selection_popup_hook} }, sub {
+      ("urxvt-gist upload" => sub { $self->upload_gist })
+   };
+
+   ()
+}
+
+sub on_user_command {
+   my ($self, $cmd) = @_;
+
+   if ($cmd eq "urxvt-gist") {
+      $self->upload_gist;
+   }
+
+   ()
+}
+
+sub on_action {
+   my ($self, $action) = @_;
+
+   $action eq "urxvt-gist"
+      and $self->upload_gist;
+
+   ()
+}
