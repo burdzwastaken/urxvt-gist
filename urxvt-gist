@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: filetype=perl
 
 # TODO(burdz): consume token from ~/.netrc <06-05-20> #
 #:META:RESOURCE:%.token:string:GitHub oauth token
@@ -63,7 +64,7 @@ sub upload_gist {
        print STDERR $response->decoded_content->url;
    } else {
        $msg = "ERROR uploading gist: $response->status_line\n";
-	   print STDERR $msg;
+       print STDERR $msg;
    }
 }
 
