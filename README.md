@@ -10,8 +10,8 @@ selection, so the same content should lead to the same Gist. Currently this
 extension does not support PATCHing an existing Gist as selection checksum with
 be different however it is something that maybe explored in the future.
 
-I<Note to xrdb users:> xrdb uses the C preprocessor, which might interpret
-the double C</> characters as comment start. Use C<\057\057> instead,
+**Note to xrdb users:** xrdb uses the C preprocessor, which might interpret
+the double `/` characters as comment start. Use `<\057\057>` instead,
 which works regardless of whether xrdb is used to parse the resource file
 or not.
 
