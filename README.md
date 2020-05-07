@@ -1,6 +1,22 @@
 # urxvt-gist
 Automatic GitHub Gist uploads for selections in URxvt
 
+This is an URxvt extension that uploads the selection as a GitHub Gist. It
+currently requires the use of an oauth token stored in your
+.Xdefaults/.Xresources.
+
+The current name of the file upload is the hex encoded md5 sum of the
+selection, so the same content should lead to the same Gist. Currently this
+extension does not support PATCHing an existing Gist as selection checksum with
+be different however it is something that maybe explored in the future.
+
+I<Note to xrdb users:> xrdb uses the C preprocessor, which might interpret
+the double C</> characters as comment start. Use C<\057\057> instead,
+which works regardless of whether xrdb is used to parse the resource file
+or not.
+
+GitHub Gist API spec: https://developer.github.com/v3/gists/#create-a-gist
+
 ## Installation
 Simply place this scripts in `/usr/lib/urxvt/perl/` for system-wide availability
 or in `~/.urxvt/ext/` for user-only availability. You can also put them in a
