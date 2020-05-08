@@ -1,0 +1,37 @@
+name: linux
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  perl:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        perl-version:
+          - '5.8'
+          - '5.10'
+          - '5.16'
+          - 'latest'
+          - 'threaded'
+
+    container:
+      image: perl:${{ matrix.perl-version }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: perl -V
+        run: perl -V
+      - name: install perl deps
+        run: curl -sL https://git.io/cpm | perl - install -g --show-build-log-on-failure
+      - name: perl -c
+        run: perl -c urxvt-gist
+      # TODO(burdz): write tests? lol <08-05-20> #
+      # - name: Run Tests
+      #   run: prove -l t
