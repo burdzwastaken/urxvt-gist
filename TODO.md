@@ -2,5 +2,4 @@
 
 - [] ~/.netrc support (potentially other authentication methods)
 - [] Control the filetype of gist uploaded
-- [] GitHub actions for linting
 - [] Configuration of private/public with keybindings

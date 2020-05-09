@@ -1,2 +1,2 @@
-requires 'JSON::MaybeXS';
 requires 'the';
+requires 'JSON::MaybeXS';
